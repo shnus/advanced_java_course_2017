@@ -21,9 +21,10 @@ public class Deadlock {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            FIRST_LOCK.notify();
             synchronized(SECOND_LOCK) {
-                //notify second thread - unreachable
-                SECOND_LOCK.notify();
+                //unreachable
+
             }
         }
     }
@@ -36,14 +37,16 @@ public class Deadlock {
         }
         //reverse order of monitors
         synchronized(SECOND_LOCK) {
-            try {
-                SECOND_LOCK.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
             synchronized(FIRST_LOCK) {
-                //notify first thread - unreachable
                 FIRST_LOCK.notify();
+                try {
+                    FIRST_LOCK.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //unreachable
+
             }
         }
 
