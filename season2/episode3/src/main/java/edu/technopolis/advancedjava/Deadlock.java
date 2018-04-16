@@ -16,7 +16,11 @@ public class Deadlock {
 
     private static void first() {
         synchronized(FIRST_LOCK) {
-            //insert some code here to guarantee a deadlock
+            try {
+                FIRST_LOCK.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             synchronized(SECOND_LOCK) {
                 //unreachable point
             }
@@ -31,7 +35,11 @@ public class Deadlock {
         }
         //reverse order of monitors
         synchronized(SECOND_LOCK) {
-            //insert some code here to guarantee a deadlock
+            try {
+                SECOND_LOCK.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             synchronized(FIRST_LOCK) {
                 //unreachable point
             }
