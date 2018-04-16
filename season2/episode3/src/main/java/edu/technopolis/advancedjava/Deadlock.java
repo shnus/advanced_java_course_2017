@@ -22,7 +22,8 @@ public class Deadlock {
                 e.printStackTrace();
             }
             synchronized(SECOND_LOCK) {
-                //unreachable point
+                //notify second thread - unreachable
+                SECOND_LOCK.notify();
             }
         }
     }
@@ -41,7 +42,8 @@ public class Deadlock {
                 e.printStackTrace();
             }
             synchronized(FIRST_LOCK) {
-                //unreachable point
+                //notify first thread - unreachable
+                FIRST_LOCK.notify();
             }
         }
 
